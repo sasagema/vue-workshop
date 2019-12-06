@@ -1,6 +1,6 @@
 <template>
     <div class="grid-container">
-        <movie-item class="grid-item" v-for="movie in movies" :key="movie.Id" :movie="movie" />
+        <movie-item class="grid-item" v-for="movie in movies" :key="movie.imdbID" :movie="movie" />
 
     </div>
 </template>

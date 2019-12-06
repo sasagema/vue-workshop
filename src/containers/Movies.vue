@@ -1,7 +1,7 @@
 <template>
     <div>
         <movie-search-form @search = "handleSearch"/>
-        <p v-if="movies.length > 0 "> 
+        <p v-if="movies !== undefined && movies.length > 0"> 
             Titles: {{movies.length}}
             <span class="sort">
                 Sort by year:
@@ -11,7 +11,7 @@
                 <label for="ascending">↑</label>
             </span>
          </p>
-         <p v-else-if="typeof image_array === 'undefined' && showMessage">{{message}}</p>
+         <p v-if="showMessage">{{message}}</p>
         <div class="row">
             
             <movie-list :movies = "sortMovies" /> 
@@ -31,8 +31,7 @@ export default {
         return {
             movies: [],
             sortOrder: 'descending',
-            message: 'No results found',
-            showMessage: false
+            message: 'No results found'
         }
     },
     methods: {
@@ -43,17 +42,25 @@ export default {
         async search({ title, type, year }) {
             this.movies = []
             const movies = await movieService.searchMovies(title, type, year);
-            this.movies = movies;
-            this.showMessage = true;
-            
-            
+            this.movies = movies;   
             
         }
 
     },
     computed: {
+        showMessage(){
+            if(this.movies === undefined){
+                return true;
+            }else{
+                return false;
+            }
+        },
         sortMovies(){
-            const sorted = this.movies.slice(0).sort((a, b) => {
+            let sorted;
+            if(this.movies === undefined){
+                return sorted=[];
+            }
+            sorted = this.movies.slice(0).sort((a, b) => {
                if(this.sortOrder === 'ascending'){
                    return a.Year - b.Year;
                }

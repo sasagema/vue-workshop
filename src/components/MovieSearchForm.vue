@@ -36,7 +36,8 @@ export default {
     },
     computed: {
         isTitleEmpty() {
-            return this.title.length === 0;
+            //return this.title.length === 0;
+            return false;
         }
     },
 }

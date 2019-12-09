@@ -1,8 +1,6 @@
 <template>
     <div class="grid-container">
-        <movie-item class="grid-item" v-for="movie in movies" :key="movie.imdbID" :movie="movie" />
-
-    </div>
+        <movie-item class="grid-item" v-for="movie in movies" :key="movie.imdbID" :movie="movie" @movieID = "handleMovieID" />    </div>
 </template>
 <script>
 import MovieItem from '../components/MovieItem'
@@ -16,6 +14,12 @@ export default {
             required: true,
             default: () => []
         }
+    },
+    methods: {
+      handleMovieID(movieID){
+        console.log('ML ' + movieID)
+        this.$emit('movieImdbID', movieID)
+      }
     }
 }
 </script>
@@ -23,10 +27,10 @@ export default {
 .grid-container {
   display: grid;
   grid-column-gap: 10px;
-    grid-row-gap: 10px;
-
-  grid-template-columns: auto auto auto;
-  padding: 10px;
+  grid-row-gap: 10px;
+  /* grid-template-columns: auto auto; */
+  
+  
 }
 
 .grid-item {

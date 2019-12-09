@@ -15,14 +15,16 @@
         <div class="row">
             <movie-list :movies = "sortMovies" @movieImdbID = "handleMovieID"/> 
         </div>
-        <button>Load more</button>
+        <button @click="handleLoadMore" :disabled="isPageEnd" v-if="currentPage > 0">{{currentPage}} of {{pageNumber}} Load more</button>
     </div>
 </template>
 <script>
 import MovieList from '../components/MovieList'
 import MovieSearchForm from '../components/MovieSearchForm'
-import movieService from '../services/movie'
+import movieService from '../services/movie-api'
 import Swal from 'sweetalert2'
+import { mapGetters } from 'vuex'
+
 
 export default {
     components: {
@@ -31,27 +33,39 @@ export default {
     },
     data() {
         return {
-            movies: [],
             movieData: {},
             sortOrder: 'descending',
-            totalResults: 0,
             message: 'No results found'
         }
     },
     methods: {
+       
         handleSearch(searchParams){
             console.log(searchParams)
             this.search(searchParams);
+        },
+        handleLoadMore() {
+            console.log('Handle')
+            this.$store.dispatch('loadMoreMovies')
         },
         handleMovieID(movieID){
             console.log(movieID)
             this.getMovie(movieID)
         },
-        async search({ title, type, year }) {
+     /*    async search({ title, type, year }) {
             this.movies = []
             const movies = await movieService.searchMovies2(title, type, year);
             this.totalResults = movies.totalResults;
             this.movies = movies.Search;   
+            
+        }, */
+        async search(params) {
+            //this.movies = []
+            //Sad je movies computed 
+            this.$store.dispatch('searchMovies',params)
+            //Sada se sami getteri mapiraju
+            //this.totalResults = this.$store.getters.getTotalResults;
+            //this.movies = this.$store.getters.getSearchResults;   
             
         },
         async getMovie(imdbID) {
@@ -75,6 +89,15 @@ export default {
 
     },
     computed: {
+        ...mapGetters({
+            movies: 'getSearchResults',
+            totalResults: 'getTotalResults',
+            currentPage: 'getCurrentPage',
+            pageNumber: 'getPageNumber'
+        }),
+         isPageEnd() {
+            return this.currentPage === this.pageNumber
+        },
         showMessage(){
             if(this.movies === undefined){
                 return true;

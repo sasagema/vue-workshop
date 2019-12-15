@@ -1,5 +1,7 @@
 # vue-movies
 
+# Vivify-ideas Vue-workshop project
+
 ## Project setup
 ```
 npm install

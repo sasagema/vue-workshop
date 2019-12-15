@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <movies/>
+    <router-link to="/watchlist"> My watchlist</router-link>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import Movies from './containers/Movies.vue'
 
 
 export default {
   name: 'app',
   components: {
-    Movies
   }
 }
 </script>

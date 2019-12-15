@@ -14,7 +14,8 @@ const state = () => ({
         title: "",
         type: "",
         year: "",
-    }
+    },
+    watchlist: []
     
     
 
@@ -34,6 +35,9 @@ const getters = {
     },
     getSearchParams: (state) => {
         return state.searchParams
+    },
+    getWatchlist: (state) => {
+        return state.watchlist
     }
 }
 const actions = {
@@ -52,6 +56,14 @@ const actions = {
             commit('LOAD_MORE_MOVIES', result)          
         }
         
+    },
+    addToWatchlist({commit}, movie) {
+        console.log("add " + movie)
+        commit('ADD_TO_WATCHLIST', movie)
+    },
+    removeFromWatchlist({commit}, movie) {
+        console.log("remove " + movie)
+        commit('REMOVE_FROM_WATCHLIST', movie)
     }
 
 }
@@ -70,6 +82,15 @@ const mutations = {
     LOAD_MORE_MOVIES(state, movies) {
         state.searchResults.push(...movies )
         state.currentPage++
+    },
+    ADD_TO_WATCHLIST(state, movie) {
+        if(!state.watchlist.includes(movie)){
+            state.watchlist.push(movie);
+        }
+        
+    },
+    REMOVE_FROM_WATCHLIST(state, movie) {
+        state.watchlist = state.watchlist.filter((item) => item.imdbID !== movie.imdbID)
     }
     
 }

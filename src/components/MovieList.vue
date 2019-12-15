@@ -16,6 +16,7 @@ export default {
         }
     },
     methods: {
+      //primer emmitovanja movieID iz MovieItem
       handleMovieID(movieID){
         console.log('ML ' + movieID)
         this.$emit('movieImdbID', movieID)

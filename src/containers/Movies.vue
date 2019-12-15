@@ -27,6 +27,7 @@ import { mapGetters } from 'vuex'
 
 
 export default {
+    name: "Movies",
     components: {
         MovieList,
         MovieSearchForm,
@@ -48,6 +49,7 @@ export default {
             console.log('Handle')
             this.$store.dispatch('loadMoreMovies')
         },
+        //primer emmitovanja movieID iz MovieItem
         handleMovieID(movieID){
             console.log(movieID)
             this.getMovie(movieID)

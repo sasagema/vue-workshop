@@ -5,7 +5,7 @@ const QUERY_PARAMS_MOVIE = (imdbID) => `?i=${imdbID}&apikey=f915e4d`
 class MovieService {
     constructor() {
         const instance = axios.create({
-            baseURL: 'http://www.omdbapi.com/',
+            baseURL: 'https://www.omdbapi.com/',
             headers: {Accept: 'application/json'}
         });
         

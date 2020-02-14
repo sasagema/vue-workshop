@@ -2,6 +2,8 @@
 
 # Vivify-ideas Vue-workshop project
 
+http://gemamovies.herokuapp.com/
+
 ## Project setup
 ```
 npm install
